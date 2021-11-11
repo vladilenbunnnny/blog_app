@@ -22,7 +22,7 @@ function Footer() {
         <Link to="/" className="text-muted">
           Blog App
         </Link>
-        . Powered by Vlad.
+        . Powered by Vlad 1.6v.
       </p>
     </footer>
   );
