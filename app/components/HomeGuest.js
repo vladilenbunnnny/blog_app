@@ -12,6 +12,9 @@ function HomeGuest() {
     try {
       await Axios.post("http://localhost:8080/register", { username, email, password });
       console.log("Success");
+      setUsername("");
+      setEmail("");
+      setPassword("");
     } catch (e) {
       console.log("error:");
       console.log(e.response.data);
