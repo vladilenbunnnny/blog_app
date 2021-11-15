@@ -12,6 +12,9 @@ function HeaderLoggedOut(props) {
       if (response.data) {
         console.log("Success");
         console.log(response);
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userName", response.data.username);
+        localStorage.setItem("avatar", response.data.avatar);
         props.setLoggedIn(true);
       } else {
         console.log("Incorrect username / password");
