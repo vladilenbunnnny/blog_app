@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
+import { Link } from "react-router-dom";
 
 function HeaderLoggedIn(props) {
   function handleSubmit(e) {
@@ -21,9 +21,9 @@ function HeaderLoggedIn(props) {
       <a href="#" className="mr-2">
         <img className="small-header-avatar" src={localStorage.getItem("avatar")} />
       </a>
-      <a className="btn btn-sm btn-success mr-2" href="/create-post">
+      <Link className="btn btn-sm btn-success mr-2" to="/create-post">
         Create Post
-      </a>
+      </Link>
       <button onClick={handleSubmit} className="btn btn-sm btn-secondary">
         Sign Out
       </button>

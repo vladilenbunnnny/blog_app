@@ -9,6 +9,9 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import Terms from "./components/Terms";
 import Home from "./components/Home";
+import CreatePost from "./components/CreatePost";
+import Axios from "axios";
+Axios.defaults.baseURL = "http://localhost:8080";
 
 function Main() {
   const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("token")));
@@ -24,6 +27,9 @@ function Main() {
         </Route>
         <Route path="/terms">
           <Terms />
+        </Route>
+        <Route path="/create-post">
+          <CreatePost />
         </Route>
       </Switch>
 
