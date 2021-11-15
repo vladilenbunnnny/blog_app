@@ -11,6 +11,7 @@ import Terms from "./components/Terms";
 import Home from "./components/Home";
 import CreatePost from "./components/CreatePost";
 import Axios from "axios";
+import ViewSinglePost from "./components/ViewSinglePost";
 Axios.defaults.baseURL = "http://localhost:8080";
 
 function Main() {
@@ -30,6 +31,9 @@ function Main() {
         </Route>
         <Route path="/create-post">
           <CreatePost />
+        </Route>
+        <Route path="/post/:id">
+          <ViewSinglePost />
         </Route>
       </Switch>
 

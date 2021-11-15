@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Page from "./Page";
 import Axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function CreatePost() {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
+  let history = useHistory();
 
   const handleSubmit = async e => {
     e.preventDefault();
     let token = localStorage.getItem("token");
     try {
-      await Axios.post("/create-post", { title, body, token });
+      const response = await Axios.post("/create-post", { title, body, token });
+      //Redirect to new post URL
+      history.push(`/post/${response.data}`);
       console.log("New Post success");
+      console.log(response);
     } catch (e) {
       console.log("There was a problem");
     }
