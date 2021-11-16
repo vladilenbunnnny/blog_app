@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import ExampleContext from "../ExampleContext";
 
 function HeaderLoggedIn(props) {
+  const addFlash = useContext(ExampleContext);
+  const userName = localStorage.getItem("userName");
+
   function handleSubmit(e) {
     e.preventDefault();
     props.setLoggedIn(false);
+    addFlash(`User ${userName} successfully logged out`);
     localStorage.removeItem("token");
     localStorage.removeItem("userName");
     localStorage.removeItem("avatar");

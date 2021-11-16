@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Page from "./Page";
 import Axios from "axios";
+import ExampleContext from "../ExampleContext";
 
 function HomeGuest() {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
+  const addFlash = useContext(ExampleContext);
+
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       await Axios.post("/register", { username, email, password });
       console.log("Success");
+      addFlash(`User ${username} created`);
       setUsername("");
       setEmail("");
       setPassword("");

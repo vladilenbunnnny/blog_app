@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Page from "./Page";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
+import ExampleContext from "../ExampleContext";
 
 function CreatePost(props) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   let history = useHistory();
+  const addFlash = useContext(ExampleContext);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -15,9 +17,10 @@ function CreatePost(props) {
       const response = await Axios.post("/create-post", { title, body, token });
       //Redirect to new post URL
       history.push(`/post/${response.data}`);
-      props.addFlash(`Congrats, you successfuly created a post about ${title}`);
+
       console.log("New Post success");
       console.log(response);
+      addFlash(`Congrats, you successfuly created a post about ${title}`);
     } catch (e) {
       console.log("There was a problem");
     }
