@@ -5,7 +5,7 @@ import ExampleContext from "../ExampleContext";
 function HeaderLoggedOut(props) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const addFlash = useContext(ExampleContext);
+  const { addFlash, setLoggedIn } = useContext(ExampleContext);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -17,7 +17,7 @@ function HeaderLoggedOut(props) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userName", response.data.username);
         localStorage.setItem("avatar", response.data.avatar);
-        props.setLoggedIn(true);
+        setLoggedIn(true);
         addFlash(`User ${username} successfully logged in`);
       } else {
         console.log("Incorrect username / password");

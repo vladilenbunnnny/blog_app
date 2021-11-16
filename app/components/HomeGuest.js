@@ -8,17 +8,21 @@ function HomeGuest() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const addFlash = useContext(ExampleContext);
+  const { addFlash, setLoggedIn } = useContext(ExampleContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await Axios.post("/register", { username, email, password });
+      const response = await Axios.post("/register", { username, email, password });
       console.log("Success");
       addFlash(`User ${username} created`);
       setUsername("");
       setEmail("");
       setPassword("");
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("avatar", response.data.avatar);
+      localStorage.setItem("userName", response.data.username);
+      setLoggedIn(true);
     } catch (e) {
       console.log("error:");
       console.log(e.response.data);

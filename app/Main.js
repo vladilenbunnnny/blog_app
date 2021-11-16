@@ -25,7 +25,7 @@ function Main() {
     setFlash(prev => prev.concat(msg));
   };
   return (
-    <ExampleContext.Provider value={addFlash}>
+    <ExampleContext.Provider value={{ addFlash, setLoggedIn }}>
       <BrowserRouter>
         <FlashMessages messages={flash} />
         <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
