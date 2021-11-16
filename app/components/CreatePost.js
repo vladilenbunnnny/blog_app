@@ -3,7 +3,7 @@ import Page from "./Page";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 
-function CreatePost() {
+function CreatePost(props) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   let history = useHistory();
@@ -15,6 +15,7 @@ function CreatePost() {
       const response = await Axios.post("/create-post", { title, body, token });
       //Redirect to new post URL
       history.push(`/post/${response.data}`);
+      props.addFlash(`Congrats, you successfuly created a post about ${title}`);
       console.log("New Post success");
       console.log(response);
     } catch (e) {
