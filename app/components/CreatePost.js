@@ -2,13 +2,15 @@ import React, { useEffect, useState, useContext } from "react";
 import Page from "./Page";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
-import ExampleContext from "../ExampleContext";
+import DispatchContext from "../DispatchContext";
 
 function CreatePost(props) {
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
   let history = useHistory();
-  const addFlash = useContext(ExampleContext);
+
+  const appDispatch = useContext(DispatchContext);
+  //const addFlash = useContext(ExampleContext);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -20,7 +22,7 @@ function CreatePost(props) {
 
       console.log("New Post success");
       console.log(response);
-      addFlash(`Congrats, you successfuly created a post about ${title}`);
+      appDispatch({ type: "flash", value: `Congrats, you successfuly created a post about ${title}` });
     } catch (e) {
       console.log("There was a problem");
     }

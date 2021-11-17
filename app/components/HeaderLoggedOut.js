@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import Axios from "axios";
-import ExampleContext from "../ExampleContext";
+import DispatchContext from "../DispatchContext";
 
 function HeaderLoggedOut(props) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const { addFlash, setLoggedIn } = useContext(ExampleContext);
+  const appDispatch = useContext(DispatchContext);
+  //const { addFlash, setLoggedIn } = useContext(ExampleContext);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -17,8 +18,9 @@ function HeaderLoggedOut(props) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userName", response.data.username);
         localStorage.setItem("avatar", response.data.avatar);
-        setLoggedIn(true);
-        addFlash(`User ${username} successfully logged in`);
+        appDispatch({ type: "login" });
+        appDispatch({ type: "flash", value: `User ${username} successfully logged in` });
+        // addFlash(`User ${username} successfully logged in`);
       } else {
         console.log("Incorrect username / password");
       }

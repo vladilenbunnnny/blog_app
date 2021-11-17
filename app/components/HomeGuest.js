@@ -1,28 +1,31 @@
 import React, { useContext, useState } from "react";
 import Page from "./Page";
 import Axios from "axios";
-import ExampleContext from "../ExampleContext";
+import DispatchContext from "../DispatchContext";
 
 function HomeGuest() {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const { addFlash, setLoggedIn } = useContext(ExampleContext);
+  //const { addFlash, setLoggedIn } = useContext(ExampleContext);
+  const appDispatch = useContext(DispatchContext);
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
       const response = await Axios.post("/register", { username, email, password });
       console.log("Success");
-      addFlash(`User ${username} created`);
+      appDispatch({ type: "flash", value: `User ${username} created` });
+      // addFlash(`User ${username} created`);
       setUsername("");
       setEmail("");
       setPassword("");
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("avatar", response.data.avatar);
       localStorage.setItem("userName", response.data.username);
-      setLoggedIn(true);
+      appDispatch({ type: "login" });
+      //setLoggedIn(true);
     } catch (e) {
       console.log("error:");
       console.log(e.response.data);
