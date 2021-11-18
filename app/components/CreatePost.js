@@ -3,6 +3,8 @@ import Page from "./Page";
 import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
+StateContext;
 
 function CreatePost(props) {
   const [title, setTitle] = useState();
@@ -10,11 +12,12 @@ function CreatePost(props) {
   let history = useHistory();
 
   const appDispatch = useContext(DispatchContext);
+  const appState = useContext(StateContext);
   //const addFlash = useContext(ExampleContext);
 
   const handleSubmit = async e => {
     e.preventDefault();
-    let token = localStorage.getItem("token");
+    let token = appState.user.token;
     try {
       const response = await Axios.post("/create-post", { title, body, token });
       //Redirect to new post URL
