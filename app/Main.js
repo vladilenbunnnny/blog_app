@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useImmerReducer } from "use-immer";
@@ -27,15 +27,22 @@ const ACTIONS = {
 
 function Main() {
   //////Reducer/////
+
   const initialState = {
     loggedIn: Boolean(localStorage.getItem("token")),
     flash: [],
+    user: {
+      token: localStorage.getItem("token"),
+      username: localStorage.getItem("username"),
+      avatar: localStorage.getItem("avatar"),
+    },
   };
   function ourReducer(draft, action) {
     switch (action.type) {
       case ACTIONS.LOGIN:
         //return { loggedIn: true, flash: state.flash };
         draft.loggedIn = true;
+        draft.user = action.data;
         return;
       case ACTIONS.LOGOUT:
         // return { loggedIn: false, flash: state.flash };
@@ -49,6 +56,21 @@ function Main() {
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
   //////Reducer/////
+
+  useEffect(() => {
+    if (state.loggedIn) {
+      localStorage.setItem("token", state.user.token);
+      localStorage.setItem("username", state.user.username);
+      localStorage.setItem("avatar", state.user.avatar);
+      console.log(state.user.token);
+      console.log(state.user.username);
+      console.log(state.user.avatar);
+    } else {
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      localStorage.removeItem("avatar");
+    }
+  }, [state.loggedIn]);
 
   // const [loggedIn, setLoggedIn] = useState(Boolean(localStorage.getItem("token")));
   // const [flash, setFlash] = useState([]);

@@ -15,14 +15,15 @@ function HeaderLoggedOut(props) {
       if (response.data) {
         console.log("Success");
         console.log(response);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userName", response.data.username);
-        localStorage.setItem("avatar", response.data.avatar);
-        appDispatch({ type: "login" });
+        // localStorage.setItem("token", response.data.token);
+        // localStorage.setItem("userName", response.data.username);
+        // localStorage.setItem("avatar", response.data.avatar);
+        appDispatch({ type: "login", data: response.data });
         appDispatch({ type: "flash", value: `User ${username} successfully logged in` });
         // addFlash(`User ${username} successfully logged in`);
       } else {
         console.log("Incorrect username / password");
+        console.log(response);
       }
     } catch (e) {
       console.log("There was a problem");

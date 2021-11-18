@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import StateContext from "../StateContext";
 import Page from "./Page";
 
 function Home() {
-  const [name, setName] = useState(localStorage.getItem("userName"));
+  const appState = useContext(StateContext);
+  const name = appState.user.username;
+  // const userName = appState.user.userName;
+  // const name = userName.charAt(0).toUpperCase() + userName.slice(1);
   return (
     <Page title="Home">
       <h2 className="text-center">

@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import StateContext from "../StateContext";
 import Page from "./Page";
 
 function ViewSinglePost() {
-  const name = localStorage.getItem("userName");
+  const appState = useContext(StateContext);
+  const name = appState.user.username;
   return (
     <Page title="Post">
       <div className="d-flex justify-content-between">

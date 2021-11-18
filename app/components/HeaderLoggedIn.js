@@ -1,22 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
+import StateContext from "../StateContext";
 
 function HeaderLoggedIn() {
   //const { addFlash, setLoggedIn } = useContext(ExampleContext);
   const appDispatch = useContext(DispatchContext);
-
-  const userName = localStorage.getItem("userName");
+  const appState = useContext(StateContext);
 
   function handleSubmit(e) {
     e.preventDefault();
     appDispatch({ type: "logout" });
-    appDispatch({ type: "flash", value: `User ${userName} successfully logged out` });
+    appDispatch({ type: "flash", value: `User ${appState.user.userName} successfully logged out` });
 
     //addFlash(`User ${userName} successfully logged out`);
-    localStorage.removeItem("token");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("avatar");
+    // localStorage.removeItem("token");
+    // localStorage.removeItem("userName");
+    // localStorage.removeItem("avatar");
   }
   return (
     <div className="flex-row my-3 my-md-0">
@@ -28,7 +28,7 @@ function HeaderLoggedIn() {
         <span className="chat-count-badge text-white"> </span>
       </span>
       <a href="#" className="mr-2">
-        <img className="small-header-avatar" src={localStorage.getItem("avatar")} />
+        <img className="small-header-avatar" src={appState.user.avatar} />
       </a>
       <Link className="btn btn-sm btn-success mr-2" to="/create-post">
         Create Post
