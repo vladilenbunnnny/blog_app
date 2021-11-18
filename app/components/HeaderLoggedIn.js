@@ -11,7 +11,7 @@ function HeaderLoggedIn() {
   function handleSubmit(e) {
     e.preventDefault();
     appDispatch({ type: "logout" });
-    appDispatch({ type: "flash", value: `User ${appState.user.userName} successfully logged out` });
+    appDispatch({ type: "flash", value: `User ${appState.user.username} successfully logged out` });
 
     //addFlash(`User ${userName} successfully logged out`);
     // localStorage.removeItem("token");
