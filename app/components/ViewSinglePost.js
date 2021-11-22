@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import StateContext from "../StateContext";
 import Page from "./Page";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 function ViewSinglePost() {
   const { id } = useParams();
@@ -19,6 +20,7 @@ function ViewSinglePost() {
         setDate(response.data.createdDate);
         console.log(response);
         setIsLoading(false);
+        console.log(username, id);
       } catch (error) {
         console.log("Error loading single post");
       }
@@ -47,10 +49,10 @@ function ViewSinglePost() {
           </div>
 
           <p className="text-muted small mb-4">
-            <a href="#">
+            <Link to={`/profile/${post.author.username}`}>
               <img className="avatar-tiny" src={post.author.avatar} />
-            </a>
-            Posted by <a href="#">{post.author.username}</a> on {dateFormatted}
+            </Link>
+            Posted by <Link to={`/profile/${post.author.username}`}>{post.author.username}</Link> on {dateFormatted}
           </p>
 
           <div className="body-content">
