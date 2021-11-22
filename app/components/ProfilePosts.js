@@ -14,7 +14,7 @@ function ProfilePosts() {
     const ourRequest = Axios.CancelToken.source();
     const fetchPosts = async () => {
       try {
-        const response = await Axios.get(`/profile/${username}/posts`, { cancelToken: ourRequest });
+        const response = await Axios.get(`/profile/${username}/posts`, { cancelToken: ourRequest.token });
 
         setIsLoading(false);
         setPost(response.data);
