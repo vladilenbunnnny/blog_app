@@ -4,6 +4,7 @@ import StateContext from "../StateContext";
 import Page from "./Page";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import LoadingDotsIcon from "./LoadingDotsIcon";
 
 function ViewSinglePost() {
   const { id } = useParams();
@@ -33,7 +34,7 @@ function ViewSinglePost() {
   return (
     <Page title="Post">
       {isLoading ? (
-        <h4>Loading...</h4>
+        <LoadingDotsIcon />
       ) : (
         <>
           <div className="d-flex justify-content-between">
