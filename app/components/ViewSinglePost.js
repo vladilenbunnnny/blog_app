@@ -13,9 +13,11 @@ function ViewSinglePost() {
   const [date, setDate] = useState();
 
   useEffect(() => {
+    const ourRequest = Axios.CancelToken.source();
+
     const fetchData = async () => {
       try {
-        const response = await Axios.get(`/post/${id}`);
+        const response = await Axios.get(`/post/${id}`, { cancelToken: ourRequest.token });
         console.log("Success loading single post");
         setPost(response.data);
         setDate(response.data.createdDate);
@@ -27,6 +29,9 @@ function ViewSinglePost() {
       }
     };
     fetchData();
+    return () => {
+      ourRequest.cancel();
+    };
   }, []);
 
   const extractedDate = new Date(date);
