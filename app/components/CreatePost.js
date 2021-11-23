@@ -4,7 +4,6 @@ import Axios from "axios";
 import { useHistory } from "react-router-dom";
 import DispatchContext from "../DispatchContext";
 import StateContext from "../StateContext";
-StateContext;
 
 function CreatePost(props) {
   const [title, setTitle] = useState();

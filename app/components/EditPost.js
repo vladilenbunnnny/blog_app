@@ -6,6 +6,7 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import LoadingDotsIcon from "./LoadingDotsIcon";
 import StateContext from "../StateContext";
+import DispatchContext from "../DispatchContext";
 
 import { useImmerReducer } from "use-immer";
 
@@ -20,6 +21,7 @@ const ACTIONS = {
 
 function EditPost() {
   const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
   const initialState = {
     title: {
       value: "",
@@ -92,8 +94,8 @@ function EditPost() {
       const updatePost = async () => {
         try {
           const response = await Axios.post(`/post/${state.id}/edit`, { title: state.title.value, body: state.body.value, token: appState.user.token }, { CancelToken: ourRequest.token });
-
           dispatch({ type: ACTIONS.SAVEREQUESTFINISHED });
+          appDispatch({ type: "flash", value: "Post updated" });
         } catch (error) {
           console.log("Error sending update for the post");
         }
