@@ -36,10 +36,6 @@ function Profile() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   console.log("haha");
-  // }, []);
-
   const appState = useContext(StateContext);
   return (
     <Page title="Profile">
