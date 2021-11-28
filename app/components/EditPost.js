@@ -17,6 +17,8 @@ const ACTIONS = {
   SUBMITREQUEST: "submitRequest",
   SAVEREQUESTSTARTED: "saveRequestStarted",
   SAVEREQUESTFINISHED: "saveRequestFinished",
+  TITLERULES: "titleRules",
+  BODYRULES: "bodyRules",
 };
 
 function EditPost() {
@@ -46,19 +48,40 @@ function EditPost() {
         draft.isFetching = false;
         return;
       case ACTIONS.TITLECHANGE:
+        draft.title.isEmpty = false;
         draft.title.value = action.value;
         return;
       case ACTIONS.BODYCHANGE:
+        draft.body.isEmpty = false;
         draft.body.value = action.value;
         return;
       case ACTIONS.SUBMITREQUEST:
-        draft.sendCount++;
+        if (!draft.title.isEmpty && !draft.body.isEmpty) {
+          draft.sendCount++;
+        }
         return;
       case ACTIONS.SAVEREQUESTSTARTED:
         draft.saveIsLoading = true;
         return;
       case ACTIONS.SAVEREQUESTFINISHED:
         draft.saveIsLoading = false;
+        return;
+      case ACTIONS.TITLERULES:
+        if (!action.value.trim()) {
+          draft.title.isEmpty = true;
+          draft.title.errMsg = "Title can not be empty";
+          return;
+        }
+        if (action.value.trim().length < 2) {
+          draft.title.isEmpty = true;
+          draft.title.errMsg = "Must be more than one character";
+          return;
+        }
+      case ACTIONS.BODYRULES:
+        if (!action.value.trim()) {
+          draft.body.isEmpty = true;
+          draft.body.errMsg = "Body can not be empty";
+        }
         return;
     }
   };
@@ -67,6 +90,8 @@ function EditPost() {
   const submitHandler = e => {
     e.preventDefault();
     dispatch({ type: ACTIONS.SUBMITREQUEST });
+    dispatch({ type: ACTIONS.SUBMITREQUEST, value: state.title.value });
+    dispatch({ type: ACTIONS.SUBMITREQUEST, value: state.body.value });
   };
 
   useEffect(() => {
@@ -120,14 +145,16 @@ function EditPost() {
               <label htmlFor="post-title" className="text-muted mb-1">
                 <small>Title</small>
               </label>
-              <input onChange={e => dispatch({ type: ACTIONS.TITLECHANGE, value: e.target.value })} value={state.title.value} autoFocus name="title" id="post-title" className="form-control form-control-lg form-control-title" type="text" placeholder="" autoComplete="off" />
+              <input onBlur={e => dispatch({ type: ACTIONS.TITLERULES, value: e.target.value })} onChange={e => dispatch({ type: ACTIONS.TITLECHANGE, value: e.target.value })} value={state.title.value} autoFocus name="title" id="post-title" className="form-control form-control-lg form-control-title" type="text" placeholder="" autoComplete="off" />
+              {state.title.isEmpty && <div className="alert alert-danger small liveValidateMessage">{state.title.errMsg}</div>}
             </div>
 
             <div className="form-group">
               <label htmlFor="post-body" className="text-muted mb-1 d-block">
                 <small>Body Content</small>
               </label>
-              <textarea onChange={e => dispatch({ type: ACTIONS.BODYCHANGE, value: e.target.value })} value={state.body.value} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" />
+              <textarea onBlur={e => dispatch({ type: ACTIONS.BODYRULES, value: e.target.value })} onChange={e => dispatch({ type: ACTIONS.BODYCHANGE, value: e.target.value })} value={state.body.value} name="body" id="post-body" className="body-content tall-textarea form-control" type="text" />
+              {state.body.isEmpty && <div className="alert alert-danger small liveValidateMessage">{state.body.errMsg}</div>}
             </div>
 
             <button className="btn btn-primary" disabled={state.saveIsLoading}>
